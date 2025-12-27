@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+@utility text-input-preset {
+  @apply px-2;
+}
