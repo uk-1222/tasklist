@@ -32,7 +32,8 @@ const AddTaskModule = ({ onAdd }: Props) => {
         <div className="flex flex-row justify-center">
           <button
             onClick={() => submit(name, desc, onAdd)}
-            className="bg-blue-500 w-fit h-8 px-2 my-5 text-white font-semibold overflow-clip hover:bg-blue-700 active:bg-indigo-800 rounded-sm"
+            className="bg-blue-500 w-fit h-8 px-2 my-5 text-white font-semibold overflow-clip hover:bg-blue-700 active:bg-indigo-800 rounded-sm
+            cursor-pointer hover:transition-all duration-150"
           >
             Add to List
           </button>
