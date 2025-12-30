@@ -5,31 +5,35 @@ import "./index.css";
 import { TaskDetailsModule } from "./components/TaskDetailsModule";
 
 export interface Task {
-  id: number;
+  key: number;
   name: string;
   desc: string;
 }
 
-// extremely long string for testing
-const ELSFT =
-  "ghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbkghjkshsdjkdsjsandkjadsbk";
-
 function App() {
   const [Tasks, setTasks] = useState<Task[]>([]);
+  const [currentTask, setCurr] = useState<Task | null>(null);
 
   const addTask = (name: string, desc: string) => {
-    let id = Date.now();
+    let key = Date.now();
     let newTask: Task = {
-      id,
+      key,
       name,
       desc,
     };
     // append newTask
     setTasks((prev) => [...prev, newTask]);
+    !currentTask && setCurr(newTask);
   };
 
-  const deleteTask = (id: number) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+  const selectTask = (key: number) => {
+    let found = Tasks.find((task) => task.key == key);
+    found && setCurr(found);
+  };
+
+  const deleteTask = (key: number) => {
+    setTasks((prev) => prev.filter((task) => task.key !== key));
+    currentTask?.key === key && setCurr(null);
   };
 
   return (
@@ -40,13 +44,24 @@ function App() {
             <AddTaskModule onAdd={addTask}></AddTaskModule>
           </div>
           <div className="h-[60vh] bg-gray-300 p-1">
-            <TaskDetailsModule name="Name" desc={ELSFT}></TaskDetailsModule>
+            <div className="size-full">
+              {currentTask && (
+                <TaskDetailsModule
+                  task={currentTask}
+                  onDelete={() => deleteTask(currentTask.key)}
+                />
+              )}
+            </div>
           </div>
         </div>
         <div className="w-[70vw]">
           <div className="h-[7vh] bg-gray-300 p-2"></div>
           <div className="h-[93vh] bg-gray-300 p-1">
-            <List items={Tasks} onDelete={deleteTask}></List>
+            <List
+              items={Tasks}
+              onDelete={deleteTask}
+              onSelect={selectTask}
+            ></List>
           </div>
         </div>
       </div>

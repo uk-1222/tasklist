@@ -1,22 +1,19 @@
+import type { Task } from "../App";
+
 interface Props {
-  name: string;
-  desc: string;
+  task?: Task;
   onDelete?: () => void;
-  onEdit?: () => void;
 }
 
-export const TaskDetailsModule = ({
-  name,
-  desc,
-  onDelete = () => {},
-  onEdit = () => {},
-}: Props) => {
+export const TaskDetailsModule = ({ task, onDelete = () => {} }: Props) => {
   return (
     <div className="size-full py-3 px-5 bg-gray-200 flex-col justify-stretch">
       <div className="h-[85%]">
-        <h1 className="text-2xl font-semibold pb-3 pt-2">{name}</h1>
+        <h1 className="text-2xl font-semibold pb-3 pt-2">
+          {task && task.name}
+        </h1>
         <p className="text-md pl-2 py-1 h-[80%] rounded-sm overflow-auto wrap-break-word">
-          {desc}
+          {task && task.desc}
         </p>
       </div>
       <div className="h-[20%] flex-col flex">

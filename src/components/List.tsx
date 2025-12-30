@@ -3,10 +3,11 @@ import { ListItem } from "./ListItem";
 
 interface Props {
   items: Task[];
-  onDelete: (id: number) => void;
+  onDelete: (key: number) => void;
+  onSelect: (key: number) => void;
 }
 
-const List = ({ items, onDelete }: Props) => {
+const List = ({ items, onDelete, onSelect }: Props) => {
   return (
     <div
       className="
@@ -21,8 +22,8 @@ const List = ({ items, onDelete }: Props) => {
         <ListItem
           name={item.name}
           desc={item.desc}
-          onClick={() => console.log(item.name)}
-          onDelete={() => onDelete(item.id)}
+          onClick={() => onSelect(item.key)}
+          onDelete={() => onDelete(item.key)}
         ></ListItem>
       ))}
     </div>
