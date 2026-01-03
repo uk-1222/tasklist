@@ -5,9 +5,16 @@ interface Props {
   items: Task[];
   onDelete: (key: number) => void;
   onSelect: (key: number) => void;
+  query: string;
 }
 
-const List = ({ items, onDelete, onSelect }: Props) => {
+const List = ({ items, onDelete, onSelect, query }: Props) => {
+  const filterByQuery = (item: Task) => {
+    return item.name.includes(query);
+  };
+
+  items = items.filter(filterByQuery);
+
   return (
     <div
       className="

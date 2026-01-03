@@ -3,6 +3,7 @@ import AddTaskModule from "./components/AddTaskModule";
 import List from "./components/List";
 import "./index.css";
 import { TaskDetailsModule } from "./components/TaskDetailsModule";
+import SearchBar from "./components/SearchBar";
 
 export interface Task {
   key: number;
@@ -13,6 +14,11 @@ export interface Task {
 function App() {
   const [Tasks, setTasks] = useState<Task[]>([]);
   const [currentTask, setCurr] = useState<Task | null>(null);
+  const [query, setQuery] = useState("");
+
+  const handleSearch = (newQuery: string) => {
+    setQuery(newQuery);
+  };
 
   const addTask = (name: string, desc: string) => {
     let key = Date.now();
@@ -55,12 +61,15 @@ function App() {
           </div>
         </div>
         <div className="w-[70vw]">
-          <div className="h-[7vh] bg-gray-300 p-2"></div>
+          <div className="h-[7vh] bg-gray-300 p-2">
+            <SearchBar handleInput={handleSearch} />
+          </div>
           <div className="h-[93vh] bg-gray-300 p-1">
             <List
               items={Tasks}
               onDelete={deleteTask}
               onSelect={selectTask}
+              query={query}
             ></List>
           </div>
         </div>

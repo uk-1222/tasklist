@@ -50,7 +50,6 @@ export const ListItem = ({ name, desc, onClick, onDelete }: Props) => {
                 font-semibold
                 text-md
                 pb-2
-                
             "
         >
           {name}

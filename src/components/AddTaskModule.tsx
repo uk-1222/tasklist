@@ -22,11 +22,11 @@ const AddTaskModule = ({ onAdd }: Props) => {
       <div className="size-full bg-gray-200 py-2 px-4">
         <h1 className="pb-2 font-bold">Add Task</h1>
         <h3 className="py-2">Name: </h3>
-        <div className="w-full h-8">
+        <div className="w-full h-10">
           <TextInput onEnter={setName} />
         </div>
         <h3 className="py-2">Description: </h3>
-        <div className="w-full h-16">
+        <div className="w-full h-20">
           <TextInput onEnter={setDesc} />
         </div>
         <div className="flex flex-row justify-center">
