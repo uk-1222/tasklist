@@ -13,7 +13,7 @@ const List = ({ items, onDelete, onSelect, query }: Props) => {
     return item.name.includes(query);
   };
 
-  items = items.filter(filterByQuery);
+  const filteredItems = items.filter(filterByQuery);
 
   return (
     <div
@@ -25,8 +25,9 @@ const List = ({ items, onDelete, onSelect, query }: Props) => {
             overflow-scroll
         "
     >
-      {items.map((item) => (
+      {filteredItems.map((item) => (
         <ListItem
+          key={item.key}
           name={item.name}
           desc={item.desc}
           onClick={() => onSelect(item.key)}
